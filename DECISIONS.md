@@ -14,7 +14,7 @@ Delete these instructions when you are done, or leave them. It does not matter.
 What you wanted at the start, and what is actually live now.
 Name one thing you dropped or added along the way, and why.
 
-*Your answer here.*
+My goal right now is to create a personal portfolio resume that I can show off who I am to potential employers. In order to make it uniquely mine I want to have a video-game like feel to it.
 
 ---
 
