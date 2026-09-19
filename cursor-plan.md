@@ -73,7 +73,11 @@ Rather than putting throwaway scaffolding into `index.html`, which is the actual
 
 **New — `work/p1-website/cursor.js`** (loaded `defer`, creates its own DOM, so a no-JS visitor sees nothing unusual)
 
-1. **Bail-outs first**, three of them. Do nothing unless `matchMedia('(pointer: fine)').matches` — no custom cursor on touch devices. Do nothing when `prefers-reduced-motion: reduce`. Do nothing when the `localStorage` preference set by the Escape toggle in step 15 says off, read inside a `try/catch` because storage throws outright in some privacy modes. That third one is easy to leave out, and without it the toggle is write-only: the preference is saved and then never honoured on the next load. Only after passing all three, create the element and add `.stickman-active`.
+1. **Bail-outs first**, and there are two kinds of them.
+
+   **Hard exits**, no element and no listeners at all: unless `matchMedia('(pointer: fine)').matches`, since a custom cursor is meaningless without a pointing device, and whenever `prefers-reduced-motion: reduce`, since an animated sprite is exactly what that setting is asking us not to draw.
+
+   **A soft exit** for the `localStorage` preference set by the Escape toggle in step 15, read inside a `try/catch` because storage throws outright in some privacy modes. Reading it at all is easy to leave out, and without the read the toggle is write-only: the preference is saved and then never honoured on the next load. But it has to be *soft*. If an "off" preference exited as hard as the other two, the Escape handler would never be bound and there would be no way to turn the cursor back on from the page, which makes the off switch a one-way door. So the element and the listeners are always built, and an `active` flag decides whether the loop runs; the Escape handler is checked **before** that flag, and every other handler after it.
 2. **Sprite element**: `<div id="stickman" aria-hidden="true">`, appended to `<body>`. `aria-hidden` plus `pointer-events: none` means it is invisible to screen readers and never hit-tests itself.
 3. **Animation table**: one object per state holding sheet URL, sheet dimensions, column count, frame count, fps, and whether it loops. Frame `i` maps to `col = i % cols`, `row = (i / cols) | 0`, and a mask position of `-(col*64)px -(row*64)px`. The explicit frame count is what keeps Punch off its two empty cells and Jump off its one.
 

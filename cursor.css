@@ -1,0 +1,63 @@
+/* Stickman custom cursor.
+   Self-contained: deleting this file and cursor.js removes the feature
+   entirely, and style.css never needs to know it existed. */
+
+/* The class is added by cursor.js only after it has successfully
+   initialised, so a script error or a blocked script leaves the normal
+   arrow rather than no cursor at all.
+
+   The descendant selector is not optional. `cursor` does inherit, but UA
+   stylesheets set `cursor: pointer` on a:any-link and `cursor: text` on
+   text inputs and textareas, and a UA rule on the element beats a value
+   inherited from an ancestor. Without this, the native pointer reappears
+   on exactly the links, buttons, and inputs a real page is made of. */
+html.stickman-active,
+html.stickman-active * {
+  cursor: none !important;
+}
+
+#stickman {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 64px;
+  height: 64px;
+
+  /* Never hit-tests itself, so elementFromPoint at the hotspot returns
+     the page underneath rather than the cursor. */
+  pointer-events: none;
+
+  z-index: 2147483647;
+  will-change: transform;
+
+  /* cursor.js overwrites these every frame. The values here are only what
+     shows in the instant before the first frame runs. */
+  --stickman-sheet: url("StickmanPack/Idle/Thin.png");
+  --stickman-sheet-size: 384px 64px;
+  --stickman-frame: 0px 0px;
+
+  /* The sheets are one flat opaque shape on transparent pixels, so masking
+     by alpha and filling with a colour lets the figure follow the page's
+     text colour. style.css sets `color-scheme: light dark`, which flips
+     that colour with the OS theme, so a hard-coded black stickman would
+     disappear on a dark background. */
+  background-color: var(--stickman-ink, currentColor);
+
+  -webkit-mask-image: var(--stickman-sheet);
+          mask-image: var(--stickman-sheet);
+  -webkit-mask-size: var(--stickman-sheet-size);
+          mask-size: var(--stickman-sheet-size);
+  -webkit-mask-position: var(--stickman-frame);
+          mask-position: var(--stickman-frame);
+
+  /* The default is `repeat`. No frame offset in this feature currently
+     tiles into the visible 64x64 box, so this fixes nothing today; it is
+     here so that changing a sheet or the display size cannot introduce a
+     second copy of the figure at the edge. */
+  -webkit-mask-repeat: no-repeat;
+          mask-repeat: no-repeat;
+}
+
+/* No prefers-reduced-motion block on purpose. cursor.js bails out before
+   creating #stickman or adding .stickman-active, so a rule targeting
+   either of them could never match. Reduced motion is handled in JS. */

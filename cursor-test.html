@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stickman cursor test page</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="cursor.css">
+</head>
+<body>
+
+  <h1>Stickman cursor test page</h1>
+
+  <p>
+    Scaffolding, not part of the site. It exists because
+    <code>index.html</code> has no links, no buttons, no form fields, and is
+    shorter than one viewport, so most of the cursor's behaviour cannot be
+    observed on it at all. The checklist at the bottom of
+    <code>cursor-plan.md</code> is meant to be run here.
+  </p>
+
+  <p>
+    <strong>Controls.</strong> Move the mouse and the stickman chases it.
+    Press any of W, A, S, D to switch to keyboard mode. Enter activates
+    whatever the stickman is standing on, Space jumps, and Escape turns the
+    whole thing off and remembers that you did.
+  </p>
+
+  <h2>Things to aim at</h2>
+
+  <p>
+    <button type="button" id="test-button">Punch me</button>
+    <span id="test-button-count" role="status">clicked 0 times</span>
+  </p>
+
+  <p>
+    <label for="test-input">A text field, for the typing guard:</label><br>
+    <input type="text" id="test-input" size="30"
+           placeholder="type wasd and a space in here">
+  </p>
+
+  <p>
+    Type <code>wasd</code> into that field and then press Space. All five
+    characters should appear, the stickman should neither move nor jump,
+    and the page should not scroll away underneath you.
+  </p>
+
+  <h2>Now scroll</h2>
+
+  <p>
+    The test link is deliberately far below this point, so reaching it with
+    the keyboard means using the edge auto-scroll rather than just walking
+    across the screen. Hold S until the stickman reaches the bottom band of
+    the window and the page should start scrolling, faster the closer it
+    gets to the edge. Hold W at the top to come back.
+  </p>
+
+  <p>
+    While you are down there, check the one that makes this feature
+    tolerable rather than infuriating: switch back to the mouse, park the
+    pointer at the very bottom of the window, and confirm the page does
+    <em>not</em> scroll. Edge auto-scroll is keyboard mode only.
+  </p>
+
+  <p>
+    Everything below is filler to give the page height. There is nothing to
+    read here, which is rather the point: the interesting part is whether
+    the scrollbar moves when it should and stays put when it should not.
+  </p>
+
+  <p>
+    Filler. A page that fits in one viewport has no scrollbar, and without a
+    scrollbar neither the Space suppression nor the edge auto-scroll can be
+    verified, because both of them are claims about scrolling that has been
+    prevented or caused. A check that cannot fail is not a check.
+  </p>
+
+  <p>
+    Filler. The Space suppression is the one most likely to pass by
+    accident. Watch the scrollbar itself rather than the text, because a
+    page that happens to be scrolled to the bottom already cannot scroll any
+    further and will look like a pass whatever the code does.
+  </p>
+
+  <p>
+    Filler. Mouse wheel, arrow keys, PageUp and PageDown should all still
+    scroll normally. Only Space was taken, and only because it is the
+    browser's page-down key and jumping would otherwise page the document
+    down on every press.
+  </p>
+
+  <p>
+    Filler. The stickman is <code>position: fixed</code>, so it stays put on
+    screen while the content moves underneath it. Its hotspot is in viewport
+    coordinates, which is why <code>elementFromPoint</code> keeps returning
+    whatever is now underneath rather than whatever was there before the
+    scroll.
+  </p>
+
+  <p>
+    Filler. The hotspot sits at the centre of the sprite's 64x64 cell, which
+    is roughly the stickman's chest. In the punch frames the fist reaches
+    about 15px further than that, so the figure visibly punches past what it
+    actually activates. That is a known trade-off and not a bug: the centre
+    is also what <code>scaleX(-1)</code> mirrors about, so the click point
+    does not shift when the figure turns around.
+  </p>
+
+  <p>
+    Filler. Jumping applies a parabolic offset to the drawing only. The
+    tracked position never moves, so a jump can never mis-aim a punch, and
+    walking to just above the bottom band and jumping should not scroll the
+    page even though the picture briefly rises into it.
+  </p>
+
+  <p>
+    Filler. Punch outranks jump, so pressing Enter in mid-air gives an air
+    punch with the arc continuing underneath it. WASD stays live in the air
+    too, so the stickman can drift while jumping.
+  </p>
+
+  <p>
+    Filler. Hovering the link, the button, and the text field should show no
+    native cursor at all: no hand, no I-beam, no arrow. Browser default
+    stylesheets set their own <code>cursor</code> on those three, which beats
+    an inherited value, so this only works because
+    <code>cursor.css</code> says <code>html.stickman-active *</code>.
+  </p>
+
+  <p>
+    Filler. Toggling Windows dark mode should leave the stickman clearly
+    visible against both backgrounds, because it is drawn as a CSS mask
+    filled with the inherited text colour rather than as a black image.
+  </p>
+
+  <p>
+    Filler. In the Network tab, five sheets should return 200:
+    <code>Thin.png</code>, <code>Run.png</code>, <code>Punch.png</code>,
+    <code>Jump.png</code>, and <code>JumpDown.png</code>.
+    <code>JumpUp.png</code> should never be requested at all, because it is
+    byte-identical to a cell of <code>Jump.png</code>. Any red 404 here is a
+    path bug, which is the failure the P1 README warns about hardest.
+  </p>
+
+  <p>
+    Filler. Press Escape and the native arrow comes back, the sprite
+    disappears, and any in-flight scroll stops. Reload and it should stay
+    off, which is the only thing that proves the preference is read at
+    startup rather than merely written.
+  </p>
+
+  <p>
+    Filler. Almost there.
+  </p>
+
+  <h2 id="target">The link target</h2>
+
+  <p>
+    <a href="#top-of-page">A link, for the punch and focus checks</a>.
+    It is an in-page anchor on purpose: a link that navigated away would end
+    the test session and lose all the state you just set up, while an anchor
+    jump is just as observable and leaves you on the page.
+  </p>
+
+  <p>
+    Stand the stickman on that link and press Enter. The ten-frame punch
+    should play once, not loop, and the page should jump to the anchor.
+    Press Enter over empty space and the punch should still play, but
+    nothing else should happen.
+  </p>
+
+  <p>
+    Then press Tab until the link is focused and press Enter again. This
+    time the browser should follow it natively and the stickman should not
+    punch at all, because Enter belongs to the focused control.
+  </p>
+
+  <p id="top-of-page">
+    <a href="#">Back to the top</a>
+  </p>
+
+  <script src="cursor.js" defer></script>
+  <script>
+    // Local to this page: makes button activation visible without needing
+    // the console open.
+    (function () {
+      var n = 0;
+      var out = document.getElementById('test-button-count');
+      document.getElementById('test-button').addEventListener('click', function () {
+        n += 1;
+        out.textContent = 'clicked ' + n + (n === 1 ? ' time' : ' times');
+      });
+    }());
+  </script>
+
+</body>
+</html>
