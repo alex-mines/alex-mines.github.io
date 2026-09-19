@@ -1,2 +1,5 @@
 .DS_Store
 Thumbs.db
+
+# JetBrains IDE settings. Local to this machine, and this repo is public.
+.idea/
