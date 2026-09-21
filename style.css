@@ -1,34 +1,547 @@
-/* A deliberately small starting point.
-   It exists to prove one thing: this file is loading.
-   If you can see spacing and a readable line length, the path in index.html works.
-
-   Delete all of it whenever you want. */
+/* Comic-book issue with game-flavored chapter names.
+   Two typefaces: Bangers (display) and Atkinson Hyperlegible (body).
+   Palette: paper, ink, one red accent, plus caption yellow for narration boxes.
+   Spacing only from 8/16/24/32/48/64/96px. */
 
 :root {
-  /* Makes the page follow the reader's light or dark mode setting, for free. */
   color-scheme: light dark;
+
+  --paper: #fbf3e0;
+  --panel: #fffdf7;
+  --ink: #16130f;
+  --accent: #c8102e;
+  --caption: #ffd23f;
+  --caption-ink: #16130f;
+  --dot: rgb(200 16 46 / 0.18);
+
+  --display: "Bangers", "Impact", sans-serif;
+  --body: "Atkinson Hyperlegible", system-ui, "Segoe UI", sans-serif;
+
+  /* Type scale, ratio 1.5 from an 18px base. */
+  --fs-sm: 1rem;
+  --fs-base: 1.125rem;
+  --fs-h3: 1.6875rem;
+  --fs-h2: 2.53rem;
+  --fs-h1: clamp(3.8rem, 13vw, 8.5rem);
+
+  --stroke: 3px solid var(--ink);
+  --drop: 6px 6px 0 var(--ink);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #15131a;
+    --panel: #201d27;
+    --ink: #f4ecd8;
+    --accent: #ff7a6b;
+    --dot: rgb(255 122 107 / 0.16);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
 }
 
 body {
-  font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-
-  /* 65ch caps the line at about 65 characters. Long lines are genuinely hard
-     to read, and this single rule does more for legibility than anything else
-     in this file. */
-  max-width: 65ch;
-
-  margin: 0 auto;
-  padding: 4rem 1.5rem;
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: var(--fs-base);
   line-height: 1.6;
-  font-size: 1.125rem;
+
+  /* The stickman is tinted from this, so it always matches the ink. */
+  --stickman-ink: var(--ink);
 }
 
-h1 {
-  font-size: 3rem;
-  line-height: 1.1;
-  margin-bottom: 1.5rem;
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: var(--accent);
+  text-underline-offset: 3px;
+  text-decoration-thickness: 2px;
+}
+
+a:hover {
+  text-decoration-thickness: 4px;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 3px;
+}
+
+h1, h2, h3 {
+  font-family: var(--display);
+  font-weight: 400;
+  letter-spacing: 0.03em;
+  line-height: 1.05;
+  margin: 0;
 }
 
 p {
-  margin-bottom: 1.5rem;
+  margin: 0 0 16px;
+}
+
+.skip {
+  position: absolute;
+  left: 16px;
+  top: -64px;
+  padding: 8px 16px;
+  background: var(--caption);
+  color: var(--caption-ink);
+  border: var(--stroke);
+  z-index: 10;
+}
+
+.skip:focus {
+  top: 16px;
+}
+
+/* ---------- Page frame ---------- */
+
+.cover,
+main,
+.colophon {
+  max-width: 72rem;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ---------- Shared comic pieces ---------- */
+
+.panel {
+  position: relative;
+  background: var(--panel);
+  border: var(--stroke);
+  box-shadow: var(--drop);
+  padding: 24px;
+}
+
+.panel > :last-child {
+  margin-bottom: 0;
+}
+
+.halftone {
+  background-image: radial-gradient(var(--dot) 1.6px, transparent 1.8px);
+  background-size: 12px 12px;
+}
+
+/* Narration box: always yellow with dark text, in both themes. */
+.caption {
+  display: inline-block;
+  max-width: 48ch;
+  background: var(--caption);
+  color: var(--caption-ink);
+  border: var(--stroke);
+  padding: 16px 24px;
+  font-weight: 700;
+}
+
+.tag {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 8px;
+}
+
+.org {
+  font-style: italic;
+}
+
+/* ---------- Cover ---------- */
+
+.cover {
+  padding-top: 32px;
+}
+
+.cover-strip {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 8px 24px;
+  border-block: var(--stroke);
+  padding: 8px 0;
+  margin-bottom: 32px;
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  letter-spacing: 0.05em;
+}
+
+.cover-grid {
+  display: grid;
+  gap: 24px;
+}
+
+@media (min-width: 52rem) {
+  .cover-grid {
+    grid-template-columns: 3fr 2fr;
+  }
+}
+
+.cover-title {
+  padding: 32px;
+}
+
+.kicker {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  letter-spacing: 0.06em;
+  margin-bottom: 8px;
+}
+
+h1 {
+  font-size: var(--fs-h1);
+  line-height: 0.9;
+  margin-bottom: 32px;
+  text-shadow: 5px 5px 0 var(--accent);
+}
+
+.toc {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.toc a {
+  display: inline-block;
+  padding: 8px 16px;
+  background: var(--panel);
+  color: var(--ink);
+  border: var(--stroke);
+  box-shadow: 3px 3px 0 var(--ink);
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  letter-spacing: 0.04em;
+  line-height: 1;
+  text-decoration: none;
+}
+
+.toc a:hover {
+  background: var(--caption);
+  color: var(--caption-ink);
+}
+
+.cover-photo {
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+}
+
+.cover-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+}
+
+.bubble {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 16px;
+  margin: 0;
+  background: var(--panel);
+  border: var(--stroke);
+  border-radius: 24px;
+  padding: 16px 24px;
+  font-weight: 700;
+}
+
+/* Tail of the speech bubble, pointing up at the face. */
+.bubble::before {
+  content: "";
+  position: absolute;
+  top: -24px;
+  left: 48px;
+  border: 12px solid transparent;
+  border-bottom-color: var(--ink);
+}
+
+.controls-hint {
+  display: none;
+  margin: 32px 0 0;
+  font-size: var(--fs-sm);
+}
+
+/* cursor.js adds this class only while the stickman is running. */
+html.stickman-active .controls-hint {
+  display: block;
+}
+
+.bubble-walk {
+  display: none;
+}
+
+html.stickman-active .bubble-walk {
+  display: inline;
+}
+
+.off-hint {
+  display: none;
+}
+
+/* Same conditions cursor.js checks before it starts. Outside them Escape
+   does nothing, so the hint would be a false promise. */
+@media (pointer: fine) and (prefers-reduced-motion: no-preference) {
+  html:not(.stickman-active) .off-hint {
+    display: inline;
+  }
+}
+
+kbd {
+  display: inline-block;
+  font-family: var(--body);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  line-height: 1.4;
+  padding: 0 8px;
+  margin: 0 2px;
+  background: var(--panel);
+  border: 2px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 2px 2px 0 var(--ink);
+}
+
+/* ---------- Chapters ---------- */
+
+.chapter {
+  padding-top: 96px;
+}
+
+h2 {
+  font-size: var(--fs-h2);
+  margin-bottom: 32px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+}
+
+.chapter-no {
+  font-size: var(--fs-base);
+  letter-spacing: 0.08em;
+  color: var(--paper);
+  background: var(--ink);
+  padding: 0 8px;
+}
+
+h3 {
+  font-size: var(--fs-h3);
+  margin-bottom: 8px;
+}
+
+.prose {
+  max-width: 65ch;
+}
+
+/* ---------- Quest log panels ---------- */
+
+.panels {
+  display: grid;
+  gap: 32px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr));
+}
+
+.panels .wide {
+  grid-column: 1 / -1;
+}
+
+.panels .wide p {
+  max-width: 65ch;
+}
+
+.chips {
+  list-style: none;
+  padding: 0;
+  margin: 16px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.chips li {
+  font-size: var(--fs-sm);
+  border: 2px solid var(--ink);
+  padding: 0 8px;
+}
+
+/* Algo-Bowl win. The only starburst on the page. */
+.burst {
+  position: absolute;
+  top: -24px;
+  right: -16px;
+  width: 120px;
+  height: 120px;
+  display: grid;
+  place-items: center;
+  background: var(--caption);
+  color: var(--caption-ink);
+  font-family: var(--display);
+  font-size: var(--fs-base);
+  letter-spacing: 0.04em;
+  transform: rotate(12deg);
+  clip-path: polygon(
+    50% 0%, 61% 18%, 82% 8%, 79% 31%, 100% 35%, 84% 52%, 98% 70%,
+    76% 72%, 76% 95%, 58% 83%, 45% 100%, 38% 80%, 16% 90%, 20% 68%,
+    0% 62%, 16% 46%, 4% 26%, 26% 25%, 26% 3%, 42% 17%
+  );
+}
+
+/* ---------- Timeline ---------- */
+
+.subhead {
+  margin: 48px 0 16px;
+}
+
+.subhead:first-of-type {
+  margin-top: 0;
+}
+
+.timeline {
+  list-style: none;
+  margin: 0;
+  padding: 0 0 0 32px;
+  border-left: 3px dashed var(--ink);
+  max-width: 65ch;
+}
+
+.timeline li {
+  position: relative;
+  padding-bottom: 24px;
+}
+
+.timeline li::before {
+  content: "";
+  position: absolute;
+  left: -43px;
+  top: 6px;
+  width: 16px;
+  height: 16px;
+  background: var(--accent);
+  border: 3px solid var(--ink);
+}
+
+.timeline p {
+  margin-bottom: 8px;
+}
+
+.when {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--accent);
+  margin-bottom: 0;
+}
+
+.role {
+  font-weight: 700;
+}
+
+.role span {
+  font-weight: 400;
+  font-style: italic;
+}
+
+.role span::before {
+  content: " · ";
+  font-style: normal;
+}
+
+/* ---------- Inventory ---------- */
+
+.inventory {
+  display: grid;
+  gap: 24px;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 19rem), 1fr));
+  margin: 0;
+}
+
+.slot {
+  border: var(--stroke);
+  box-shadow: var(--drop);
+  background: var(--panel);
+  padding: 16px 24px;
+}
+
+.slot dt {
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  letter-spacing: 0.04em;
+  line-height: 1.2;
+  margin-bottom: 8px;
+}
+
+.slot dd {
+  margin: 0;
+}
+
+/* ---------- Contact ---------- */
+
+.finale {
+  text-align: center;
+}
+
+.finale h2 {
+  justify-content: center;
+  font-size: var(--fs-h1);
+  text-shadow: 5px 5px 0 var(--accent);
+}
+
+.contact {
+  list-style: none;
+  padding: 0;
+  margin: 32px 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
+}
+
+.contact a {
+  display: inline-block;
+  padding: 8px 16px;
+  border: var(--stroke);
+  box-shadow: 3px 3px 0 var(--ink);
+  background: var(--panel);
+  font-weight: 700;
+  overflow-wrap: anywhere;
+}
+
+.colophon {
+  padding-top: 96px;
+  padding-bottom: 48px;
+  text-align: center;
+  font-size: var(--fs-sm);
+}
+
+/* ---------- Small screens ---------- */
+
+@media (max-width: 30rem) {
+  .panel,
+  .cover-title {
+    padding: 16px;
+  }
+
+  .chapter {
+    padding-top: 64px;
+  }
+
+  .burst {
+    right: -8px;
+    width: 88px;
+    height: 88px;
+  }
 }

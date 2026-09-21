@@ -3,22 +3,296 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Hello</title>
+  <title>Alex McDonald - Computer Science</title>
+  <meta name="description" content="Alex McDonald, computer science BS + MS student at Colorado School of Mines. Projects, experience, and contact.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bangers&display=swap">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="cursor.css">
 </head>
 <body>
 
-  <h1>Hello, world.</h1>
+  <a class="skip" href="#main">Skip to content</a>
 
-  <p>
-    This page is live. That is the only thing it is here to prove.
-  </p>
+  <header class="cover">
+    <div class="cover-strip">
+      <span>Vol. 1</span>
+      <span>Colorado School of Mines</span>
+      <span>Issue #2027</span>
+    </div>
 
-  <p>
-    Everything about it is yours to delete. Open Claude Code in this folder and
-    tell it what you actually want to build.
-  </p>
+    <div class="cover-grid">
+      <div class="panel cover-title halftone">
+        <p class="kicker">Computer Science BS + MS</p>
+        <h1>Alex<br>McDonald</h1>
+        <p class="caption">
+          Software developer finishing a master's in computer science at Mines.
+          Available for full-time work starting January 2027.
+        </p>
+        <nav aria-label="Sections">
+          <ul class="toc">
+            <li><a href="#quests">Quest Log</a></li>
+            <li><a href="#story">Story So Far</a></li>
+            <li><a href="#inventory">Inventory</a></li>
+            <li><a href="#origin">Origin</a></li>
+            <li><a href="#contact">Continue?</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <figure class="panel cover-photo">
+        <img src="img/headshot.jpg" width="600" height="800"
+             alt="Alex McDonald smiling outdoors in a grey polo shirt">
+        <p class="bubble">Hi, I'm Alex.<span class="bubble-walk"> Take the stickman for a walk.</span><span class="off-hint"> Try hitting <kbd>Esc</kbd> to get a fun cursor.</span></p>
+      </figure>
+    </div>
+
+    <p class="controls-hint">
+      <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> walk ·
+      <kbd>Space</kbd> jump ·
+      <kbd>Enter</kbd> punch (it clicks what it hits) ·
+      <kbd>Esc</kbd> back to a normal cursor
+    </p>
+  </header>
+
+  <main id="main">
+
+    <section class="chapter" aria-labelledby="about-h">
+      <h2 id="about-h"><span class="chapter-no">Ch. 1</span> Previously</h2>
+      <div class="prose">
+        <p>
+          I finished my BS in computer science at Colorado School of Mines in May 2026
+          and I'm now in the accelerated master's program, graduating May 2027.
+          The work I like most is building software on a team, especially when the
+          people using it are right there to tell us what's broken.
+        </p>
+        <p>
+          The classes that stuck with me were Algorithms, Software Development,
+          Advanced Machine Learning, Deep Learning, and UI/UX. This semester I'm
+          taking LLM Development, AI Agents, Computer Vision, and Computer Simulations.
+          I'll have only a few credits left after this term, so I can start a
+          full-time role in January 2027.
+        </p>
+      </div>
+    </section>
+
+    <section class="chapter" id="quests" aria-labelledby="quests-h">
+      <h2 id="quests-h"><span class="chapter-no">Ch. 2</span> Quest Log</h2>
+
+      <div class="panels">
+
+        <article class="panel wide">
+          <p class="tag">Summer 2026 · Internship</p>
+          <h3>Talos Train Automation</h3>
+          <p class="org">Progress Rail · Simulation Engineering</p>
+          <p>
+            Fixed bugs in the simulation software behind Progress Rail's Talos train
+            automation product and deployed the fixes live, working across the Systems
+            and Interfaces, Simulations, and QA teams so each fix held up for every
+            product it touched. Implemented the on-board network message formats as
+            object-oriented classes that match the latest specification.
+          </p>
+          <p>
+            Wrote automation scripts that saved QA testers hundreds of hours. When new
+            customer requirements came in, I mapped the features out with QA and then
+            rebuilt the UI they use to test them.
+          </p>
+          <ul class="chips" aria-label="Topics">
+            <li>Simulation</li><li>OOP</li><li>Networking protocols</li><li>Test automation</li><li>UI</li>
+          </ul>
+        </article>
+
+        <article class="panel wide">
+          <p class="tag">Spring 2026 · Team of 5</p>
+          <h3>ACAKE AI Nutrition Assistant</h3>
+          <p>
+            A web app where a system of AI agents handles nutrition questions. You give
+            it a photo, text, or both, and it identifies the meal and its ingredients,
+            breaks down calories per ingredient from the USDA database, and checks
+            everything against your allergies and diet. I designed how user input is
+            structured for the agents and how their output is collected and formatted
+            for the UI.
+          </p>
+          <ul class="chips" aria-label="Topics">
+            <li>Multi-agent</li><li>Vision + text input</li><li>USDA data</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <p class="tag">June 2025 · Team of 4</p>
+          <h3>AI Drainage Report Assistant</h3>
+          <p class="org">for JVA Consulting Engineers</p>
+          <p>
+            A retrieval-augmented (RAG) chat agent built in Azure AI Studio on JVA's
+            archive of past drainage reports, so answers come from the firm's own work.
+            I built the agent and integrated it into the React front end my team wrote,
+            then we presented the finished tool to JVA.
+          </p>
+          <ul class="chips" aria-label="Topics">
+            <li>Azure AI</li><li>RAG</li><li>React</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <span class="burst" aria-hidden="true">Winner!</span>
+          <p class="tag">Nov 2024 · Team of 3</p>
+          <h3>Algo-Bowl</h3>
+          <p>
+            <strong>Won the Fall 2024 Algo-Bowl</strong>, a class-wide algorithm
+            competition. My team designed a problem instance, a solver, and a solution
+            verifier for an NP-complete problem. I wrote the heuristic that builds the
+            starting solution our simulated annealing then improves.
+          </p>
+          <ul class="chips" aria-label="Topics">
+            <li>Heuristics</li><li>Simulated annealing</li><li>NP-complete</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <p class="tag">Spring 2025 · Team of 4</p>
+          <h3>Draining Time</h3>
+          <p>
+            A game we built in GameMaker Studio 2. I worked on the implementation and
+            programming, helped shape the mechanics and creative direction, and managed
+            the project on GitHub with a backlog, presenting to stakeholders and working
+            their feedback into the game.
+          </p>
+          <ul class="chips" aria-label="Topics">
+            <li>GameMaker</li><li>Game design</li><li>Project management</li>
+          </ul>
+        </article>
+
+        <article class="panel">
+          <p class="tag">April 2025 · With a partner</p>
+          <h3>Valorant Esports Database</h3>
+          <p>
+            Took a messy esports dataset, normalized it to Boyce-Codd Normal Form,
+            designed and diagrammed the schema, and loaded the cleaned data. Then used
+            SQL queries and statistics to rank players within each team role and
+            presented the results as visualizations.
+          </p>
+          <ul class="chips" aria-label="Topics">
+            <li>PostgreSQL</li><li>Schema design</li><li>Data analysis</li>
+          </ul>
+        </article>
+
+      </div>
+    </section>
+
+    <section class="chapter" id="story" aria-labelledby="story-h">
+      <h2 id="story-h"><span class="chapter-no">Ch. 3</span> The Story So Far</h2>
+
+      <h3 class="subhead">Main quest</h3>
+      <ol class="timeline">
+        <li>
+          <p class="when">June 2026 - Aug 2026</p>
+          <p class="role">Simulation Engineer Intern <span>Progress Rail</span></p>
+        </li>
+        <li>
+          <p class="when">Jan 2026 - Present</p>
+          <p class="role">Programming Languages Course TA <span>Colorado School of Mines</span></p>
+        </li>
+        <li>
+          <p class="when">Aug 2025 - Present</p>
+          <p class="role">Algorithms Course TA <span>Colorado School of Mines</span></p>
+          <p>Office hours and tutoring, assignment design and grading, and code interviews with students.</p>
+        </li>
+      </ol>
+
+      <h3 class="subhead">Side quests</h3>
+      <ol class="timeline">
+        <li>
+          <p class="when">Aug 2023 - May 2026</p>
+          <p class="role">Volunteer <span>Tau Beta Pi honor society</span></p>
+        </li>
+        <li>
+          <p class="when">Vice President</p>
+          <p class="role">Mines Bowling Club</p>
+        </li>
+        <li>
+          <p class="when">Aug 2024 - Oct 2025</p>
+          <p class="role">Print and Sales Associate <span>Office Depot OfficeMax</span></p>
+          <p>Took customers from a rough idea to a finished print job, plus front-end sales and inventory.</p>
+        </li>
+        <li>
+          <p class="when">May 2023 - Aug 2023</p>
+          <p class="role">Summer IT Assistant <span>Arvada West High School</span></p>
+          <p>Kept printers, networks, sound systems, and projectors running for summer school, reimaged Windows machines over network boot, and repaired Chromebooks.</p>
+        </li>
+        <li>
+          <p class="when">Oct 2020 - Sep 2022</p>
+          <p class="role">Lifeguard <span>Apex Park and Recreation District</span></p>
+        </li>
+      </ol>
+    </section>
+
+    <section class="chapter" id="inventory" aria-labelledby="inventory-h">
+      <h2 id="inventory-h"><span class="chapter-no">Ch. 4</span> Inventory</h2>
+
+      <dl class="inventory">
+        <div class="slot">
+          <dt>Languages</dt>
+          <dd>C++, Java, Python, C#, C</dd>
+        </div>
+        <div class="slot">
+          <dt>Low level</dt>
+          <dd>Linux terminal, Bash, RISC-V, OCaml</dd>
+        </div>
+        <div class="slot">
+          <dt>AI and ML</dt>
+          <dd>PyTorch, NumPy, Azure AI, Google ADK, Claude Code, GitHub Copilot</dd>
+        </div>
+        <div class="slot">
+          <dt>Data</dt>
+          <dd>PostgreSQL, data structures, algorithms, modeling</dd>
+        </div>
+        <div class="slot">
+          <dt>Web</dt>
+          <dd>HTML, CSS, JavaScript</dd>
+        </div>
+        <div class="slot">
+          <dt>Team tools</dt>
+          <dd>Git, GitHub, Jira, Confluence, Jama, Agile, backlog planning</dd>
+        </div>
+      </dl>
+    </section>
+
+    <section class="chapter" id="origin" aria-labelledby="origin-h">
+      <h2 id="origin-h"><span class="chapter-no">Ch. 5</span> Origin Story</h2>
+
+      <div class="panels two">
+        <div class="panel">
+          <p class="tag">Jan 2026 - May 2027 (expected)</p>
+          <h3>MS, Computer Science</h3>
+          <p class="org">Colorado School of Mines · GPA 4.0</p>
+        </div>
+        <div class="panel">
+          <p class="tag">Aug 2023 - May 2026</p>
+          <h3>BS, Computer Science</h3>
+          <p class="org">Colorado School of Mines · GPA 4.0</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter finale" id="contact" aria-labelledby="contact-h">
+      <h2 id="contact-h">Continue?</h2>
+      <p class="caption">
+        I'm looking for a software role starting January 2027. If your team
+        could use me, I'd like to hear about it.
+      </p>
+      <ul class="contact">
+        <li><a href="mailto:alex_mcdonald@mines.edu">alex_mcdonald@mines.edu</a></li>
+        <li><a href="mailto:alex@mcdcentral.org">alex@mcdcentral.org</a></li>
+        <li><a href="https://www.linkedin.com/in/alex-mcdonald-cs/">LinkedIn</a></li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer class="colophon">
+    <p>Hand-built in plain HTML and CSS, hosted on GitHub Pages. To be continued.</p>
+  </footer>
 
   <script src="cursor.js" defer></script>
 

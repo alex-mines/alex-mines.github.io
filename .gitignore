@@ -3,3 +3,6 @@ Thumbs.db
 
 # JetBrains IDE settings. Local to this machine, and this repo is public.
 .idea/
+
+# Source material for site content: resumes with address/phone, transcript, full-size photo.
+Resume Resources/
