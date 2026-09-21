@@ -16,6 +16,7 @@ Name one thing you dropped or added along the way, and why.
 
 My goal right now is to create a personal portfolio resume that I can show off who I am to potential employers. In order to make it uniquely mine I want to have a video-game like feel to it. 
 I have decided to tweak the design idea to have a comic book styling in order to fit with the stickman cursor.
+
 ---
 
 ## 2. A fork in the road
