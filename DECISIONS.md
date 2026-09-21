@@ -29,7 +29,7 @@ Say which you picked, what the alternative was, and what you gave up by not taki
 
 "There was no alternative" is not an answer. Find the fork.
 
-*Your answer here.*
+*One fork in the road was the design decision on whether to keep it professional or get more personal. Because the target audience for this site is potential employers it may make sense to keep it professional however the purpose of a personal site for me is to go beyond what I can show on a resume. I am giving up some of that clean curated look that you give in a resume in order to give a more well rounded view of who I am as a person.*
 
 ---
 

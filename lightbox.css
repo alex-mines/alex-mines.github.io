@@ -1,0 +1,163 @@
+/* Photo lightbox for adventures.html.
+   Self-contained: deleting this file and lightbox.js leaves the photo
+   links working as plain links to the full-size image, which is what
+   they already are without JavaScript. style.css never needs to know
+   this existed. */
+
+/* Only shown once lightbox.js has built the overlay and opened it. */
+.lb {
+  position: fixed;
+  inset: 0;
+
+  /* Deliberately far below the stickman's z-index. A native <dialog>
+     would render in the top layer, above every z-index on the page, and
+     the stickman cursor would vanish behind the backdrop while the page
+     still has `cursor: none`. That would leave no visible pointer at all. */
+  z-index: 1000;
+
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: 16px;
+  padding: 24px;
+  background: rgb(0 0 0 / 0.88);
+}
+
+.lb[hidden] {
+  display: none;
+}
+
+.lb-stage {
+  display: grid;
+  place-items: center;
+  min-height: 0;
+}
+
+.lb-stage img {
+  max-width: 100%;
+  max-height: 100%;
+  border: var(--stroke);
+  box-shadow: var(--drop);
+  background: var(--panel);
+}
+
+/* Narration box, same yellow as the rest of the issue. */
+.lb-caption {
+  justify-self: center;
+  max-width: 60ch;
+  margin: 0;
+  background: var(--caption);
+  color: var(--caption-ink);
+  border: var(--stroke);
+  padding: 8px 16px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.lb-count {
+  display: block;
+  font-weight: 400;
+  font-size: var(--fs-sm);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ---------- Controls ---------- */
+
+.lb button {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  padding: 0;
+  background: var(--panel);
+  color: var(--ink);
+  border: var(--stroke);
+  box-shadow: 3px 3px 0 var(--ink);
+  font-family: var(--display);
+  font-size: var(--fs-h3);
+  line-height: 1;
+  cursor: pointer;
+}
+
+.lb button:hover {
+  background: var(--caption);
+  color: var(--caption-ink);
+}
+
+.lb button:disabled {
+  opacity: 0.35;
+  box-shadow: none;
+}
+
+.lb-close {
+  top: 24px;
+  right: 24px;
+}
+
+.lb-prev {
+  left: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.lb-next {
+  right: 24px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Keep the image clear of the side buttons. */
+@media (min-width: 40rem) {
+  .lb-stage {
+    padding: 0 80px;
+  }
+}
+
+/* Small screens have no room beside the photo. Putting the arrows on the
+   top bar next to Close keeps them off both the photo and the caption;
+   the stage gets top padding so the photo clears that bar. */
+@media (max-width: 40rem) {
+  .lb-prev {
+    left: 24px;
+    top: 24px;
+    transform: none;
+  }
+
+  .lb-next {
+    left: 88px;
+    right: auto;
+    top: 24px;
+    transform: none;
+  }
+
+  .lb-stage {
+    padding-top: 72px;
+  }
+}
+
+/* ---------- The zoom marker on a thumbnail ----------
+   The thumbnail grid itself lives in style.css, because it is page
+   layout rather than part of this feature: with lightbox.css and
+   lightbox.js deleted the photos still sit in their panels and still
+   open, as plain links. Only the "+" belongs here, and lightbox.js adds
+   .lb-ready to <html> only once the overlay is wired up, so the marker
+   never promises a lightbox that is not there. */
+
+.lb-ready .shot-frame::after {
+  content: "+";
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  background: var(--caption);
+  color: var(--caption-ink);
+  border: 2px solid var(--ink);
+  font-family: var(--display);
+  font-size: var(--fs-base);
+  line-height: 1;
+}
+

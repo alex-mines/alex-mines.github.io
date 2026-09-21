@@ -176,6 +176,30 @@ main,
   letter-spacing: 0.05em;
 }
 
+/* The masthead doubles as the nav between the two pages of the issue. */
+.issue-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+
+.issue-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 3px solid transparent;
+}
+
+.issue-nav a:hover {
+  border-bottom-color: var(--accent);
+}
+
+/* The page you are on is the one in red, so the strip always says where
+   you are as well as where you can go. */
+.issue-nav a[aria-current="page"] {
+  color: var(--accent);
+  border-bottom-color: var(--accent);
+}
+
 .cover-grid {
   display: grid;
   gap: 24px;
@@ -244,6 +268,19 @@ h1 {
   height: 100%;
   object-fit: cover;
   object-position: 50% 30%;
+}
+
+/* The headshot is portrait, so cropping it to the height of the title
+   panel next to it works. A landscape cover photo would be sliced into
+   a narrow strip instead, so that one keeps its own shape and the panel
+   ends wherever the photo ends. */
+.cover-photo.natural {
+  align-self: start;
+}
+
+.cover-photo.natural img {
+  height: auto;
+  object-fit: fill;
 }
 
 .bubble {
@@ -399,6 +436,85 @@ h3 {
   );
 }
 
+/* ---------- Photo spreads (adventures.html) ----------
+   One trip per spread: a heading, a grid of panels, then the narration
+   box under it, the way a comic page reads top to bottom. */
+
+.spread {
+  margin-top: 48px;
+}
+
+.spread-head {
+  margin-bottom: 16px;
+}
+
+.strip {
+  list-style: none;
+  margin: 0 0 24px;
+  padding: 0;
+  display: grid;
+  gap: 16px;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+@media (min-width: 40rem) {
+  .strip {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (min-width: 64rem) {
+  .strip {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* A two-photo strip inside a panel never wants three or four columns. */
+.strip.two {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.shot.wide {
+  grid-column: span 2;
+}
+
+.shot-frame {
+  display: block;
+  position: relative;
+  border: var(--stroke);
+  box-shadow: var(--drop);
+  background: var(--panel);
+  line-height: 0;
+}
+
+/* Square panels for the regular tiles and a wider one for the hero, so
+   the grid keeps its lines whether the source photo is portrait or
+   landscape. object-fit does the cropping. */
+.shot-frame img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 1;
+  object-fit: cover;
+}
+
+.shot.wide .shot-frame img {
+  aspect-ratio: 3 / 2;
+}
+
+.shot-frame:hover {
+  box-shadow: 9px 9px 0 var(--accent);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .shot-frame {
+    transition: box-shadow 120ms ease-out, translate 120ms ease-out;
+  }
+
+  .shot-frame:hover {
+    translate: -3px -3px;
+  }
+}
+
 /* ---------- Timeline ---------- */
 
 .subhead {
@@ -518,6 +634,11 @@ h3 {
   background: var(--panel);
   font-weight: 700;
   overflow-wrap: anywhere;
+}
+
+.next-issue {
+  margin: 32px 0 0;
+  font-size: var(--fs-sm);
 }
 
 .colophon {

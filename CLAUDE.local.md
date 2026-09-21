@@ -17,8 +17,11 @@
 
 ## Files
 - `index.html`: deliverable page. First content draft (comic-issue layout, game-named chapters) plus the cursor's two lines (`cursor.css` in head, deferred `cursor.js` before `</body>`). Keep free of test scaffolding.
-- `style.css`: site styles. Bangers + Atkinson Hyperlegible, paper/ink/red accent/caption yellow tokens, dark mode via `prefers-color-scheme`, sets `--stickman-ink`.
+- `adventures.html`: second deliverable page, "Off the Clock". Comic field journal of the three backpacking/roadtrip stories (Ch. 6), summer sports (Ch. 7), and skiing (Ch. 8), built from `Resume Resources/Personal.md`. Loads `style.css`, `lightbox.css`, `cursor.css`, and both scripts.
+- `style.css`: site styles, shared by both pages. Bangers + Atkinson Hyperlegible, paper/ink/red accent/caption yellow tokens, dark mode via `prefers-color-scheme`, sets `--stickman-ink`. Also holds `.issue-nav` (the masthead nav between pages) and the `.spread`/`.strip`/`.shot-frame` photo grid.
+- `lightbox.css`, `lightbox.js`: click-to-enlarge photo viewer, self-contained the way the cursor is. Photos are plain links to the full-size file, so deleting both files leaves them working. `lightbox.js` takes Escape in the capture phase so it does not also toggle the stickman.
 - `img/headshot.jpg`: 600x800 web crop of the headshot, re-encoded (no EXIF).
+- `img/<trip>/*.jpg`: web copies of the trip photos, 1600px long edge plus a `-thumb` at 700px, all EXIF stripped. Folder names are lowercase-hyphenated because GitHub Pages is case-sensitive and Windows is not. HEIC originals live in `Resume Resources/Photo Originals/` (gitignored) and must never be committed: browsers do not render HEIC.
 - `cursor.css`, `cursor.js`: stickman cursor feature, self-contained.
 - `cursor-test.html`: dev test page for the cursor. Deletable later.
 - `cursor-plan.md`: cursor design doc and verification checklist. Source of truth for cursor behavior; read it before changing the cursor.
@@ -34,6 +37,8 @@
 
 ## Dev environment
 - Windows 11. `python3` resolves to the Microsoft Store stub and fails; use `py -m http.server 8000` from this folder, then open `http://localhost:8000/`. Serve over http, not `file://`.
+- `Pillow` and `pillow-heif` are installed into that Python (via `py -m ensurepip` then `py -m pip install`). They are what convert HEIC photos to web JPEGs; nothing on the site depends on them at runtime.
+- The filesystem is case-insensitive but GitHub Pages is not, so a folder that differs only in case silently merges locally and 404s live. Check image paths against `git ls-files`, not against a local server.
 - Never trust an agent's "deployed OK" claim: check the live URL yourself (the P1 verification habit from lecture 03).
 
 ## Working notes
