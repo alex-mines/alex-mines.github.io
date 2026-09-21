@@ -116,11 +116,16 @@
     return !!node.isContentEditable;
   }
 
-  function shouldIgnoreKey(e) {
+  function shouldIgnoreKey(e, isActivation) {
     if (isTypingTarget(e.target)) return true;
 
     var focused = document.activeElement;
     if (isTypingTarget(focused)) return true;
+
+    // Movement keys have no native meaning on a focused button or link, so
+    // only the activation keys defer to focus. Otherwise a punched button
+    // keeps focus and WASD goes dead.
+    if (!isActivation) return false;
 
     // Enter and Space are the browser's own activation keys. Someone who
     // reached a link by Tab must keep getting native behaviour instead of
@@ -149,7 +154,11 @@
       : null;
 
     if (hit) {
-      try { hit.focus(); } catch (err) { /* not focusable, fine */ }
+      // Focus only typing controls, so the user can type right after. A
+      // focused button would make shouldIgnoreKey swallow Enter/Space next.
+      if (isTypingTarget(hit)) {
+        try { hit.focus(); } catch (err) { /* not focusable, fine */ }
+      }
       hit.click();
       return;
     }
@@ -207,9 +216,9 @@
     }
 
     if (!active) return;
-    if (shouldIgnoreKey(e)) return;
-
     var key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
+    var isActivation = key === ' ' || key === 'Spacebar' || key === 'Enter';
+    if (shouldIgnoreKey(e, isActivation)) return;
 
     if (key === 'w' || key === 'a' || key === 's' || key === 'd') {
       keys[key] = true;
