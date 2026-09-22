@@ -1,0 +1,27 @@
+StatusCode        : 200
+StatusDescription : OK
+Content           : <!doctype html>
+                    <html lang="en">
+                    <head>
+                      <meta charset="utf-8">
+                      <meta name="viewport" content="width=device-width, initial-scale=1">
+                      <title>Alex McDonald - Computer Science</title>
+                      <meta name="...
+RawContent        : HTTP/1.1 200 OK
+                    Connection: keep-alive
+                    Access-Control-Allow-Origin: *
+                    Strict-Transport-Security: max-age=31556952
+                    x-proxy-cache: MISS
+                    X-GitHub-Request-Id: 1E2C:3E18C0:3B881F:42922A:6AB1D9B9
+                    x-gi...
+Forms             : {}
+Headers           : {[Connection, keep-alive], [Access-Control-Allow-Origin, *], [Strict-Transport-Security, max-age=31556952], [x-proxy-cache, MISS]...}
+Images            : {@{innerHTML=; innerText=; outerHTML=<IMG alt="Alex McDonald smiling outdoors in a grey polo shirt" src="img/headshot.jpg" width=600 height=800>; outerText=; tagName=IMG; alt=Alex McDonald smiling outdoors
+                    in a grey polo shirt; src=img/headshot.jpg; width=600; height=800}}
+InputFields       : {}
+Links             : {@{innerHTML=Skip to content; innerText=Skip to content; outerHTML=<A class=skip href="#main">Skip to content</A>; outerText=Skip to content; tagName=A; class=skip; href=#main}, @{innerHTML=The Resume;
+                    innerText=The Resume; outerHTML=<A href="index.html" aria-current="page">The Resume</A>; outerText=The Resume; tagName=A; href=index.html; aria-current=page}, @{innerHTML=Off the Clock; innerText=Off the
+                    Clock; outerHTML=<A href="adventures.html">Off the Clock</A>; outerText=Off the Clock; tagName=A; href=adventures.html}, @{innerHTML=Quest Log; innerText=Quest Log; outerHTML=<A href="#quests">Quest
+                    Log</A>; outerText=Quest Log; tagName=A; href=#quests}...}
+ParsedHtml        : System.__ComObject
+RawContentLength  : 12782

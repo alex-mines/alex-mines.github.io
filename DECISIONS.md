@@ -43,7 +43,7 @@ If it genuinely never happened, say so plainly, and then say what you would have
 check in order to notice. Being honest here costs you far less than a story you cannot
 defend when you record your video.
 
-*Your answer here.*
+*The original implementation of the stickman cursor was implemented with wasd controls for the keyboard control scheme. This is standard for computer games and the standard choice but for many nongamers they would likely expect arrow keys as the way to control a character on screen. I pushed back on the initial implementation to allow both control schemes.*
 
 ---
 
@@ -56,7 +56,7 @@ A check that could not have failed is not a check.
 
 Link to your `verification/` folder.
 
-*Your answer here.*
+*The check I ran was 'curl https://alex-mines.github.io/' in the terminal as well as accessing it in the browser to confirm that it loads the homepage. If the homepage was not correctly written in index.html or the repository was named something else it would not be located at this page.*
 
 ---
 
@@ -67,4 +67,4 @@ fully understand.
 
 What would you do next, and how would you find out?
 
-*Your answer here.*
+*One thing I would like to add to my site is some of my personal favorites in media such as books, movies, and music. This would require some up front effort in gathering the image assets to make it look nice but would be doable.*
