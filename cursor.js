@@ -1,8 +1,8 @@
 /* Stickman custom cursor.
 
    A position:fixed sprite replaces the native pointer. It can be driven by
-   the mouse (it chases the pointer) or by the keyboard (WASD to move,
-   Enter to activate whatever it is standing on, Space to jump). Escape
+   the mouse (it chases the pointer) or by the keyboard (WASD or the arrow keys
+   to move, Enter to activate whatever it is standing on, Space to jump). Escape
    turns it off and the preference survives a reload.
 
    Every visual update happens in the one requestAnimationFrame loop at the
@@ -83,7 +83,19 @@
   var velX = 0, velY = 0;
   var facing = 1;
 
-  var keys = { w: false, a: false, s: false, d: false };
+  // Each arrow key maps onto its WASD twin, so both schemes share one set
+  // of held flags. Two keys for one direction count separately: releasing
+  // W while ArrowUp is still held must not stop the walk.
+  var MOVE_KEYS = {
+    w: 'up', ArrowUp: 'up', a: 'left', ArrowLeft: 'left',
+    s: 'down', ArrowDown: 'down', d: 'right', ArrowRight: 'right'
+  };
+  var keys = {};                          // held movement key -> true
+
+  function held(dir) {
+    for (var k in keys) if (keys[k] && MOVE_KEYS[k] === dir) return true;
+    return false;
+  }
 
   var punchTimer = -1;                    // -1 means not running
   var jumpTimer = -1;
@@ -124,7 +136,8 @@
 
     // Movement keys have no native meaning on a focused button or link, so
     // only the activation keys defer to focus. Otherwise a punched button
-    // keeps focus and WASD goes dead.
+    // keeps focus and WASD goes dead. Arrow keys do mean something on a
+    // select or a text field, but those are already typing targets above.
     if (!isActivation) return false;
 
     // Enter and Space are the browser's own activation keys. Someone who
@@ -186,7 +199,7 @@
       rafId = 0;
       // Stopping the loop is also what stops any in-flight edge scroll,
       // since scrolling only ever happens inside it.
-      keys.w = keys.a = keys.s = keys.d = false;
+      keys = {};
       punchTimer = -1;
       jumpTimer = -1;
     }
@@ -220,7 +233,15 @@
     var isActivation = key === ' ' || key === 'Spacebar' || key === 'Enter';
     if (shouldIgnoreKey(e, isActivation)) return;
 
-    if (key === 'w' || key === 'a' || key === 's' || key === 'd') {
+    if (MOVE_KEYS.hasOwnProperty(key)) {
+      if (key.indexOf('Arrow') === 0) {
+        // Already handled, e.g. by the open lightbox paging photos, so the
+        // arrows belong to it and the stickman stays put.
+        if (e.defaultPrevented) return;
+        // Otherwise the arrows' default is a page scroll, fighting the
+        // edge auto-scroll while you walk.
+        e.preventDefault();
+      }
       keys[key] = true;
       mode = 'keys';
       return;
@@ -250,11 +271,11 @@
     // Deliberately not guarded: a key pressed on the page and released
     // after focus moved must still clear, or it sticks down forever.
     var key = e.key.length === 1 ? e.key.toLowerCase() : e.key;
-    if (key === 'w' || key === 'a' || key === 's' || key === 'd') keys[key] = false;
+    if (MOVE_KEYS.hasOwnProperty(key)) keys[key] = false;
   }
 
   function releaseAllKeys() {
-    keys.w = keys.a = keys.s = keys.d = false;
+    keys = {};
   }
 
   /* ---- The loop ---------------------------------------------------------
@@ -285,8 +306,8 @@
         y += (dy / dist) * step;
       }
     } else {
-      var kx = (keys.d ? 1 : 0) - (keys.a ? 1 : 0);
-      var ky = (keys.s ? 1 : 0) - (keys.w ? 1 : 0);
+      var kx = (held('right') ? 1 : 0) - (held('left') ? 1 : 0);
+      var ky = (held('down') ? 1 : 0) - (held('up') ? 1 : 0);
       if (kx || ky) {
         var len = Math.sqrt(kx * kx + ky * ky);  // so diagonals are not faster
         x += (kx / len) * KEY_SPEED * dt;

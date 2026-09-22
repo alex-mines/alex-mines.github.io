@@ -91,7 +91,7 @@ Rather than putting throwaway scaffolding into `index.html`, which is the actual
 
 4. **Preload**: `new Image().src = url` for all five sheets at init, so the first punch or jump does not show a blank frame while the browser fetches.
 5. **Single rAF loop** doing, in order: integrate position, apply edge auto-scroll, pick the state, advance the frame clock, write one `transform` and one mask position. Every visual update goes through this loop; nothing writes styles or scrolls from an event handler.
-6. **Two modes.** `pointermove` sets mode to follow and updates the target. Any of WASD, Space, or Enter sets mode to keys, so pressing Space first works without having to walk somewhere first. In follow mode position eases toward the target at a capped speed with a small deadzone; in keys mode it integrates velocity from held keys, clamped to the viewport.
+6. **Two modes.** `pointermove` sets mode to follow and updates the target. Any of WASD, the arrow keys, Space, or Enter sets mode to keys, so pressing Space first works without having to walk somewhere first. In follow mode position eases toward the target at a capped speed with a small deadzone; in keys mode it integrates velocity from held keys, clamped to the viewport.
 7. **State selection**, checked in this priority order each frame: **punch** while its one-shot timer runs, else **jump** while its arc timer runs (`jumpUp` on the way up, `jumpDown` past the apex), else **run** above a small speed threshold, else **idle**. Facing flips with `scaleX(-1)` on negative horizontal velocity, holding the last facing at rest, since the art faces right.
 
    Punch outranking jump means Enter mid-jump gives an air punch, with the arc continuing underneath it. That is a deliberate consequence of running the arc as an independent timer rather than as a state, and it is worth keeping. WASD also stays live in the air, so you can drift while jumping.
@@ -152,7 +152,7 @@ Then, at **`http://localhost:8000/cursor-test.html`**, which is the page with th
 
 1. **Follow mode** — move the mouse. The stickman chases it playing Run, then settles into the looping Idle. It faces left when moving left.
 2. **Idle** — leave the mouse still for ten seconds. Idle cycles continuously through its 6 frames rather than freezing on one.
-3. **Keys mode** — hold each of W, A, S, D. It moves in the right direction, runs while held, returns to Idle on release, and cannot be pushed off-screen.
+3. **Keys mode** — hold each of W, A, S, D, then each arrow key. It moves in the right direction, runs while held, returns to Idle on release, and cannot be pushed off-screen.
 4. **Punch** — press Enter with the stickman over the test link. The 10-frame punch plays once, does not loop, and the page jumps to the anchor. Press Enter over empty space: punch plays, nothing happens. Expect the fist to land visibly past the link, about 15px; that is the accepted hotspot trade-off in step 9, not a bug.
 5. **Jump** — press Space. The stickman arcs up and back down, plays the 3 ascent frames then the falling pose, and lands in Idle. Press Space while running: it jumps and keeps drifting. Hold Space down: exactly one jump, not a stuttering loop.
 6. **Space does not scroll** — scroll to the top, then press Space ten times in a row with focus on the page body. The scroll position does not move by a single pixel. This is the check with the most ways to pass by accident, so watch the scrollbar rather than the content.
@@ -164,7 +164,7 @@ Then, at **`http://localhost:8000/cursor-test.html`**, which is the page with th
 12. **The typing guard** — click into a text input, type `wasd`, then press Space. The letters and the space character all appear, the stickman neither moves nor jumps, and the page does not scroll away under you.
 13. **The focus guard** — press Tab until the test link is focused, then press Enter. The browser follows the link natively; the stickman does not punch at some unrelated spot.
 14. **The native cursor stays hidden on controls** — hover the link, the button, and the text input in turn. No hand, no I-beam, no arrow appears over any of them. This is the check for the UA-stylesheet override described in the `cursor.css` section, and without the `html.stickman-active *` rule all three fail while the rest of the page still looks fine.
-15. **Other scrolling still works** — mouse wheel, arrow keys, and PageDown all scroll normally. Only Space was taken.
+15. **Other scrolling still works** — mouse wheel, PageUp, and PageDown all scroll normally. Only Space and the arrow keys were taken (arrows move the stickman; with the lightbox open they page photos instead and the stickman stays put).
 16. **Dark mode** — toggle Windows dark mode. The stickman is clearly visible against both backgrounds.
 17. **Touch and reduced motion** — DevTools device toolbar, and DevTools rendering panel's "emulate prefers-reduced-motion". In both, the native arrow comes back and no sprite appears.
 18. **Network tab** — `Thin.png`, `Run.png`, `Punch.png`, `Jump.png` and `JumpDown.png` all return 200, `JumpUp.png` is never requested, and there are no red 404s. Path bugs are the failure mode the P1 README warns about hardest, and this is what catches them.

@@ -30,7 +30,7 @@
 - `Resume Resources/`: source material for site content (see above).
 
 ## Stickman cursor (implemented)
-- A sprite-animated stickman replaces the native cursor: follows the mouse, or moves with W/A/S/D, Space jumps, Enter/click punches (and clicks what it hits). Keys mode auto-scrolls near the top/bottom edges.
+- A sprite-animated stickman replaces the native cursor: follows the mouse, or moves with W/A/S/D or the arrow keys, Space jumps, Enter/click punches (and clicks what it hits). Keys mode auto-scrolls near the top/bottom edges.
 - Sprites are CSS masks tinted by `currentColor`, so the figure follows light/dark mode.
 - Accessibility: disabled for touch/coarse pointers and `prefers-reduced-motion`; Escape toggles it (persisted in `localStorage`); keys are ignored while typing in form controls. Failure leaves the normal cursor.
 - Removable by deleting `cursor.css`, `cursor.js`, and their two lines in `index.html`. Keep it isolated from `style.css`.
